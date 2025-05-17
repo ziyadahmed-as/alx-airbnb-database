@@ -1,56 +1,43 @@
-This README documents the SQL queries for an Airbnb-style database system with Ethiopian context, focusing on different join operations to retrieve booking, property, and user information.
+Write a query to find all properties where the average rating is greater than 4.0 using a subquery.
 
-Database Schema
-The database contains the following main tables:
+The inner subquery calculates the average rating for each property
 
-User: Stores guest and host information
+It filters to only include properties with average rating > 4.0
 
-Property: Contains property listings with Ethiopian locations
+The outer query joins this result with the Property table to get full property details
 
-Booking: Records all reservations made
+Results are ordered by highest average rating first
 
-Payment: Tracks payment transactions in ETB
+Expected Output:
 
-Review: Stores guest feedback on properties
+property_id | title                     | city        | price_per_night | average_rating
+------------+---------------------------+-------------+-----------------+---------------
+1           | Cozy Addis Ababa Apartment| Addis Ababa | 2500 ETB        | 4.8
+3           | Hawassa Lakefront Villa   | Hawassa     | 3800 ETB        | 4.5
+9           | Lalibela Rock-Hewn Guesthouse | Lalibela | 4000 ETB      | 4.2
 
+Write a correlated subquery to find users who have made more than 3 bookings.
 
-Ethiopian names (Abebe, Alemitu, etc.)
+Explanation:
 
-Ethiopian cities (Addis Ababa, Hawassa, Bahir Dar)
+The correlated subquery counts bookings for each user
 
-Prices in ETB (Ethiopian Birr)
+Outer query filters to only show users with > 3 bookings
 
-Payment Methods:
+The alternative version uses JOIN and GROUP BY which is often more efficient
 
-Includes Telebirr mobile payment
+Results show frequent bookers ordered by number of bookings
 
-Local phone numbers (+251)
+Expected Output:
 
-Property Types:
+user_id | first_name | last_name | email               | booking_count
+--------+------------+-----------+---------------------+--------------
+1       | Abebe      | Kebede    | abebe.k@example.com | 5
+5       | Tewodros   | Hailu     | tewodros.h@example.com | 4
+8       | Yeshi      | Dereje    | yeshi.d@example.com | 4
+These queries help identify:
 
-Traditional Ethiopian guesthouses
+High-quality properties based on guest ratings
 
-Eco lodges in national parks
-
-Heritage homes near historical sites
-
-Example Outputs
-Bookings with Guest Details
-booking_id | check_in_date | check_out_date | total_price | user_id | first_name | last_name
------------+---------------+----------------+-------------+---------+------------+----------
-1          | 2023-01-10    | 2023-01-15     | 12500 ETB   | 1       | Abebe      | Kebede
-2          | 2023-02-14    | 2023-02-20     | 22800 ETB   | 5       | Tewodros   | Hailu
-Properties with Reviews
-property_id | title                     | city        | price_per_night | rating | comment
-------------+---------------------------+-------------+-----------------+--------+-------------------------
-1           | Cozy Addis Ababa Apartment| Addis Ababa | 2500 ETB        | 5      | Perfect location in Bole
-3           | Hawassa Lakefront Villa   | Hawassa     | 3800 ETB        | 4      | Beautiful lake views
-Usage Notes
-Performance: Ensure proper indexing on join fields (user_id, property_id)
-
-Filtering: Add WHERE clauses for date ranges or specific locations
-
-Pagination: Implement LIMIT and OFFSET for large result sets
-
-Currency: All monetary values are in Ethiopian Birr (ETB)
+Frequent bookers who might qualify for loyalty programs
 
